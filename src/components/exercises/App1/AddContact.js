@@ -1,9 +1,14 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import {AppContext} from "./AppContext";
 
-export default function AddContact({ onAddContact }) {
+export default function AddContact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+
+    const {
+        onAddContact
+    } = useContext(AppContext);
 
   const addContact = () => {
       onAddContact({

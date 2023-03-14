@@ -1,11 +1,17 @@
 import React from 'react';
-import { useState, useCallback } from 'react';
+import { useState, useContext } from 'react';
+import {AppContext} from "../AppContext";
 
-export default function Chat({ contact, onSendMessage }) {
+export default function Chat() {
   const [text, setText] = useState('');
 
+    const {
+      selectedContact,
+      onSendMessage
+    } = useContext(AppContext);
+
   const sendMessage = () => {
-      onSendMessage(text, contact);
+      onSendMessage(text, selectedContact);
       setText('');
   };
 
@@ -13,11 +19,11 @@ export default function Chat({ contact, onSendMessage }) {
     <section className="chat">
       <textarea
         value={text}
-        placeholder={'Chat to ' + (contact ? contact.name : 'none')}
+        placeholder={'Chat to ' + (selectedContact ? selectedContact.name : 'none')}
         onChange={e => setText(e.target.value)}
       />
       <br />
-      <button onClick={sendMessage}>Send to {(contact ? contact.email : 'none')}</button>
+      <button onClick={sendMessage}>Send to {(selectedContact ? selectedContact.email : 'none')}</button>
     </section>
   );
 }
