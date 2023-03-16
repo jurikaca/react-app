@@ -163,7 +163,7 @@ function contactsReducer (state, action) {
     let newSelectedContact = state.selectedContact;
     switch (action.type) {
         case 'ADD':
-            return [...state, action.contact];
+            return {contacts: [...state.contacts, action.contact], selectedContact: newSelectedContact};
         case 'LIST':
             action.contacts.forEach((contact) => {
                 if (contact.selected === true) {
@@ -184,7 +184,7 @@ function contactsReducer (state, action) {
 
             return {contacts: newContacts, selectedContact: newSelectedContact};
         case 'DELETE':
-            return { ...state, contacts: state.filter((contact) => contact.id !== action.contactId)};
+            return { ...state, contacts: state.contacts.filter((contact) => contact.id !== action.contactId)};
         default:
             throw Error('Action type ' + action.type + ' not known.');
 
