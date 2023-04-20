@@ -1,15 +1,13 @@
 import React from 'react';
-import { useContext } from 'react';
 import Message from "../left/Message";
-import {AppContext} from "../AppContext";
+import {useDispatch, useSelector} from "react-redux";
+import { deleteContact } from "../redux/slices/contactSlice";
 
 export default function MessageByContact() {
 
-    const {
-        contacts,
-        messages,
-        onDeleteContact
-    } = useContext(AppContext);
+    const dispatch = useDispatch();
+    const contacts = useSelector(selector => selector.contacts.data);
+    const messages = useSelector(selector => selector.message.data);
 
     const render = contacts.map((contact) => {
         const contactMessages = messages.map((message) => {
@@ -20,7 +18,7 @@ export default function MessageByContact() {
 
         return <div key={contact.id}>
             <div>
-                Contact: {contact.name} <button onClick={() => onDeleteContact(contact)}>Delete</button>
+                Contact: {contact.name} <button onClick={() => dispatch(deleteContact(contact))}>Delete</button>
             </div>
             <div className={'messages'}>
                 {contactMessages}

@@ -204,13 +204,3 @@ function UserReducer (state, action) {
 
     }
 }
-
-function CounterReducer (state, action) {
-    switch (action.type) {
-        case 'INCREMENT':
-            return state + 1;
-        default:
-            throw Error('Action type ' + action.type + ' not known.');
-
-    }
-}

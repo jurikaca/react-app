@@ -1,14 +1,11 @@
 import React from 'react';
-import {AppContext} from "../AppContext";
-import { useContext } from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import { deleteContact ,selectContact } from "../redux/slices/contactSlice";
 
 export default function ContactList() {
 
-    const {
-      contacts,
-      onDeleteContact,
-      onSelectContact
-    } = useContext(AppContext);
+    const contacts = useSelector(selector => selector.contacts.data);
+    const dispatch = useDispatch();
 
   return (
     <section className="contact-list">
@@ -16,11 +13,12 @@ export default function ContactList() {
         {contacts.map(contact =>
           <li key={contact.email}>
             <button onClick={() => {
-              onSelectContact(contact.id);
+              dispatch(selectContact(contact.id));
             }}>
               {contact.name} ({contact.selected ? 'selected' : 'not selected'})
             </button>
-            <button onClick={() => onDeleteContact(contact)}>Delete</button>
+            <button onClick={() => dispatch(deleteContact(contact))}>Delete</button>
+            <button>Edit</button>
           </li>
         )}
       </ul>

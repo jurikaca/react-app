@@ -1,17 +1,22 @@
 import React from 'react';
-import { useState, useContext } from 'react';
-import {AppContext} from "../AppContext";
+import { useState } from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import { sendMessage } from "../redux/slices/messageSlice";
+import {uuid} from "uuidv4";
 
 export default function Chat() {
   const [text, setText] = useState('');
 
-    const {
-      selectedContact,
-      onSendMessage
-    } = useContext(AppContext);
+  const selectedContact = useSelector(selector => selector.contacts.selectedContact);
+  const dispatch = useDispatch();
 
-  const sendMessage = () => {
-      onSendMessage(text, selectedContact);
+  const onSendMessage = () => {
+      dispatch(sendMessage({
+          id: uuid(),
+          receiverId: selectedContact.id,
+          receiverName: selectedContact.name,
+          content: text,
+      }));
       setText('');
   };
 
@@ -23,7 +28,7 @@ export default function Chat() {
         onChange={e => setText(e.target.value)}
       />
       <br />
-      <button onClick={sendMessage}>Send to {(selectedContact ? selectedContact.email : 'none')}</button>
+      <button onClick={onSendMessage}>Send to {(selectedContact ? selectedContact.email : 'none')}</button>
     </section>
   );
 }

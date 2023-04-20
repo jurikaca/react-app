@@ -1,18 +1,15 @@
 import React from 'react';
 import Message from "./Message";
-import { useContext } from 'react';
-import {AppContext} from "../AppContext";
+import {useSelector} from "react-redux";
 
 export default function Messages() {
 
-    const {
-      messages
-    } = useContext(AppContext);
+    const messages = useSelector(selector => selector.message.messages);
 
   console.log('rendered messages component');
   return (
     <section className="messages">
-        { messages[0] ? <ul>
+        { messages && messages[0] ? <ul>
             {messages.map(message =>
               <Message key={message.id} message={message}/>
             )}

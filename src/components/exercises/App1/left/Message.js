@@ -1,20 +1,18 @@
 import React from 'react';
-import { useContext } from 'react';
-import {AppContext} from "../AppContext";
+import {useDispatch} from "react-redux";
+import { deleteMessage } from "../redux/slices/messageSlice";
 
 export default function Message({
   message
 }) {
 
+    const dispatch = useDispatch();
     console.log('render message component');
-    const {
-      onDeleteMessage
-    } = useContext(AppContext);
 
   return (
     <li>
       "{message.content}" <em>(sent to {message.receiverName}, id: {message.receiverId})</em>
-      <button onClick={() => onDeleteMessage(message)}>Delete</button>
+      <button onClick={() => dispatch(deleteMessage(message.id))}>Delete</button>
     </li>
   );
 }
