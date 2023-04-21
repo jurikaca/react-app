@@ -1,9 +1,8 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import api from "../../../../../services/api";
 import "babel-polyfill";
 
 export const fetchContacts = createAsyncThunk('contacts/fetchContacts', async () => {
-    const response = await api.get('list-contacts.php');
+    const response = await fetch('list-contacts.php').then(response => response.json());
     return response.contacts;
 });
 
