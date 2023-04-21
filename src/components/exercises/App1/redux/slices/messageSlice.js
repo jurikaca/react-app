@@ -1,9 +1,8 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import api from "../../../../../services/api";
 import "babel-polyfill";
 
 export const fetchMessages = createAsyncThunk('messages/fetchMessages', async () =>{
-    const response = await api.get('list-messages.php');
+    const response = await fetch('list-messages.php').then(response => response.json());
     return response.messages;
 })
 

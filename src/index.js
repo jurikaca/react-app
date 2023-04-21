@@ -10,6 +10,11 @@ import Squares from './components/Squares';
 import Programmers from './components/Programmers';
 import Todo from "./components/Todo";
 
+if (process.env.NODE_ENV === 'development') {
+  const { worker } = require('./mocks/browser')
+  worker.start()
+}
+
 render(
   <>
       <App1 />
