@@ -17,7 +17,6 @@ export const contactSlice = createSlice({
     status: "idle",
     data: [],
     selectedContact: null,
-    updateRequired: false,
   },
   reducers: {
     addContact: (state, action) => {
@@ -29,7 +28,6 @@ export const contactSlice = createSlice({
         contact.id === contactId.id;
 
         if (contactIndex !== -1 && contact.id === contactId.id) {
-          console.log(contactId.name);
           contact.name = contactId.name;
           contact.email = contactId.email;
           contact.edit = !contact.edit;
@@ -65,8 +63,6 @@ export const contactSlice = createSlice({
           contact.edit = !contact.edit;
         }
       });
-
-      state.updateRequired = true;
     },
   },
   extraReducers(builder) {

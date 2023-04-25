@@ -4,11 +4,10 @@ import { addContact, updateContact } from "./redux/slices/contactSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { uuid } from "uuidv4";
 
-export default function AddContact(props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-
-  const isEditForm = props.contact ? true : false;
+export default function AddContact({ contact }) {
+  const isEditForm = contact ? true : false;
+  const [name, setName] = useState(isEditForm ? contact.name : "");
+  const [email, setEmail] = useState(isEditForm ? contact.email : "");
 
   const dispatch = useDispatch();
 
@@ -16,7 +15,7 @@ export default function AddContact(props) {
     if (isEditForm) {
       dispatch(
         updateContact({
-          id: props.contact.id,
+          id: contact.id,
           name: name,
           email: email,
         })
@@ -39,21 +38,20 @@ export default function AddContact(props) {
     <section className="add-contact">
       <input
         type="text"
-        placeholder={isEditForm ? props.contact.name : "Enter Name"}
+        placeholder="Enter Name"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <input
         type="text"
-        placeholder={isEditForm ? props.contact.email : "Enter Email"}
+        placeholder="Enter Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <br />
-      {!isEditForm && (
-        <button onClick={addContactHandler}>Add new contact</button>
-      )}
-      {isEditForm && <button onClick={addContactHandler}>Save</button>}
+      <button onClick={addContactHandler}>
+        {isEditForm ? "Save" : "Add Contact"}
+      </button>
     </section>
   );
 }
