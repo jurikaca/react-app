@@ -23,14 +23,13 @@ export const contactSlice = createSlice({
       state.data.push(action.payload);
     },
     updateContact: (state, action) => {
-      const contactId = action.payload;
       const contactFound = state.data.find(
-        (contact) => contact.id === contactId.id
+        (contact) => contact.id === action.payload.id
       );
 
       if (contactFound) {
-        contactFound.name = contactId.name;
-        contactFound.email = contactId.email;
+        contactFound.name = action.payload.name;
+        contactFound.email = action.payload.email;
         contactFound.edit = !contactFound.edit;
       }
     },
