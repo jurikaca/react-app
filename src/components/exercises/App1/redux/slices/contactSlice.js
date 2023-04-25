@@ -24,15 +24,15 @@ export const contactSlice = createSlice({
     },
     updateContact: (state, action) => {
       const contactId = action.payload;
-      const contactIndex = state.data.findIndex((contact) => {
-        contact.id === contactId.id;
+      const contactFound = state.data.find(
+        (contact) => contact.id === contactId.id
+      );
 
-        if (contactIndex !== -1 && contact.id === contactId.id) {
-          contact.name = contactId.name;
-          contact.email = contactId.email;
-          contact.edit = !contact.edit;
-        }
-      });
+      if (contactFound) {
+        contactFound.name = contactId.name;
+        contactFound.email = contactId.email;
+        contactFound.edit = !contactFound.edit;
+      }
     },
     selectContact: (state, action) => {
       state.data.forEach((contact) => {
