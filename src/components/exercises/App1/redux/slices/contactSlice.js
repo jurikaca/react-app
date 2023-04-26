@@ -11,6 +11,21 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
+export const updateContactThunk = createAsyncThunk(
+  "contacts/updateContactThunk",
+  async (data) => {
+    const response = await fetch("contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
+    return {
+      response,
+      request: data,
+    };
+  }
+);
+
 export const contactSlice = createSlice({
   name: "contact",
   initialState: {
@@ -21,17 +36,6 @@ export const contactSlice = createSlice({
   reducers: {
     addContact: (state, action) => {
       state.data.push(action.payload);
-    },
-    updateContact: (state, action) => {
-      const contactFound = state.data.find(
-        (contact) => contact.id === action.payload.id
-      );
-
-      if (contactFound) {
-        contactFound.name = action.payload.name;
-        contactFound.email = action.payload.email;
-        contactFound.edit = !contactFound.edit;
-      }
     },
     selectContact: (state, action) => {
       state.data.forEach((contact) => {
@@ -72,16 +76,25 @@ export const contactSlice = createSlice({
       })
       .addCase(fetchContacts.rejected, (state, action) => {
         console.log("extra reducers rejected", action);
+      })
+      .addCase(updateContactThunk.fulfilled, (state, action) => {
+        const contactFound = state.data.find(
+          (contact) => contact.id === action.payload.request.id
+        );
+
+        if (contactFound) {
+          contactFound.name = action.payload.request.name;
+          contactFound.email = action.payload.request.email;
+          contactFound.edit = !contactFound.edit;
+        }
+      })
+      .addCase(updateContactThunk.rejected, (state, action) => {
+        console.log("extra reducers rejected", action);
       });
   },
 });
 
-export const {
-  addContact,
-  selectContact,
-  deleteContact,
-  editContact,
-  updateContact,
-} = contactSlice.actions;
+export const { addContact, selectContact, deleteContact, editContact } =
+  contactSlice.actions;
 
 export default contactSlice.reducer;

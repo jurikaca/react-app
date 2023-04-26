@@ -1,7 +1,11 @@
 import React from "react";
-import { useState, useContext } from "react";
-import { addContact, updateContact } from "./redux/slices/contactSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import {
+  addContact,
+  updateContact,
+  updateContactThunk,
+} from "./redux/slices/contactSlice";
+import { useDispatch } from "react-redux";
 import { uuid } from "uuidv4";
 
 export default function AddContact({ contact }) {
@@ -14,7 +18,7 @@ export default function AddContact({ contact }) {
   const addContactHandler = () => {
     if (isEditForm) {
       dispatch(
-        updateContact({
+        updateContactThunk({
           id: contact.id,
           name: name,
           email: email,
