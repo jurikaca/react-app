@@ -39,10 +39,13 @@ export const contactSlice = createSlice({
     },
     selectContact: (state, action) => {
       state.data.forEach((contact) => {
-        contact.selected = false;
         if (contact.id === action.payload) {
-          contact.selected = true;
-          state.selectedContact = contact;
+          contact.selected = !contact.selected;
+          if (contact.selected === true) {
+            state.selectedContact = contact;
+          } else {
+            state.selectedContact = false;
+          }
         }
       });
     },
