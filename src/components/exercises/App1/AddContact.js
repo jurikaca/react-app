@@ -1,10 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import {
-  addContact,
-  updateContact,
-  updateContactThunk,
-} from "./redux/slices/contactSlice";
+import { addContact, updateContactThunk } from "./redux/slices/contactSlice";
 import { useDispatch } from "react-redux";
 import { uuid } from "uuidv4";
 
