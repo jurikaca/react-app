@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
-import { useContext } from "react";
+import Login from "./auth/LogInForm";
 import RightComponent from "./right/RightComponent";
 import LeftComponent from "./left/LeftComponent";
 import AddContact from "./AddContact";
 import User from "./auth/User";
-import { AppProvider } from "./AppContext";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logInThunk,
@@ -37,6 +36,9 @@ export default function InnerApp1() {
   }, []);
 
   const loggedInUser = useSelector((selector) => selector.user.loggedInUser);
+  const logInError = useSelector((selector) => selector.user.logInError);
+  const usernameHandle = useSelector((selector) => selector.user.username);
+  const passwordHandle = useSelector((selector) => selector.user.password);
   console.log("contacts selector", contacts);
 
   return (
@@ -50,11 +52,17 @@ export default function InnerApp1() {
               User not logged in' +{" "}
               <button
                 onClick={() => {
-                  dispatch(logInThunk());
+                  dispatch(logInThunk({ usernameHandle }, { passwordHandle }));
                 }}
               >
                 log in
               </button>
+              <Login
+                handleLogInThunk={() =>
+                  dispatch(logInThunk({ usernameHandle }, { passwordHandle }))
+                }
+                logInError={logInError}
+              />
             </>
           )}
         </b>

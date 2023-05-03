@@ -1,11 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import "regenerator-runtime/runtime";
 
 export const logInThunk = createAsyncThunk(
   "loggedInUser/logInThunk",
-  async () => {
-    const response = await fetch("login", { method: "POST" }).then((response) =>
-      response.json()
-    );
+  async (data) => {
+    const response = await fetch("login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
     return response;
   }
 );
@@ -33,6 +36,9 @@ export const userSlice = createSlice({
   initialState: {
     status: "idle",
     loggedInUser: null,
+    logInError: false,
+    username: "",
+    password: "",
   },
   reducers: {
     get_user: (state, action) => {
@@ -41,13 +47,22 @@ export const userSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(logInThunk.fulfilled, (state, action) => {
-      state.loggedInUser = action.payload.user;
+      if (action.payload.success === true) {
+        state.loggedInUser = action.payload.user;
+        state.username = action.payload.user.username;
+        state.password = action.payload.user.password;
+      } else {
+        state.logInError = true;
+        console.log("User log in Error.");
+      }
     });
     builder.addCase(logInThunk.rejected, (state, action) => {
       console.log("extra reducers rejected", action);
     });
     builder.addCase(logOutThunk.fulfilled, (state, action) => {
-      state.loggedInUser = null;
+      if (action.payload.success === true) {
+        state.loggedInUser = null;
+      }
     });
     builder.addCase(logOutThunk.rejected, (state, action) => {
       console.log("extra reducers rejected", action);
