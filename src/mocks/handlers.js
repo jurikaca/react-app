@@ -53,6 +53,9 @@ export const handlers = [
   rest.post("/contact", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ success: true }));
   }),
+  rest.post("/send-message", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ success: true }));
+  }),
   // rest.get('/user', (req, res, ctx) => {
   // Persist user's authentication in the session
   //   sessionStorage.setItem('is-authenticated', 'true')
