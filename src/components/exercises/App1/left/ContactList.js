@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteContact,
+  deleteContactThunk,
   selectContact,
   editContact,
 } from "../redux/slices/contactSlice";
@@ -23,7 +23,9 @@ export default function ContactList() {
             >
               {contact.name} ({contact.selected ? "selected" : "not selected"})
             </button>
-            <button onClick={() => dispatch(deleteContact(contact))}>
+            <button
+              onClick={() => dispatch(deleteContactThunk({ id: contact.id }))}
+            >
               Delete
             </button>
             <button onClick={() => dispatch(editContact(contact.id))}>
