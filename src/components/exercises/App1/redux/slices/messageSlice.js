@@ -13,15 +13,15 @@ export const fetchMessages = createAsyncThunk(
 
 export const deleteMessageThunk = createAsyncThunk(
   "messages/deleteMessages",
-  async (data) => {
-    const response = await fetch("delete-message", {
-      method: "POST",
+  async (messageId) => {
+    const response = await fetch(`message/${messageId.id}`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(messageId),
     }).then((response) => response.json());
     return {
       response,
-      request: data,
+      request: messageId,
     };
   }
 );
