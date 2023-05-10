@@ -11,16 +11,16 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 export const deleteContactThunk = createAsyncThunk(
-  "contact/contactID",
-  async (data) => {
-    const response = await fetch("delete-contact", {
-      method: "POST",
+  "contacts/deleteContactThunk",
+  async (contactId) => {
+    const response = await fetch(`contact/${contactId.id}`, {
+      method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(contactId),
     }).then((response) => response.json());
     return {
       response,
-      request: data,
+      request: contactId,
     };
   }
 );
