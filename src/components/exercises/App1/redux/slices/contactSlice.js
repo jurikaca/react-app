@@ -13,10 +13,9 @@ export const fetchContacts = createAsyncThunk(
 export const deleteContactThunk = createAsyncThunk(
   "contacts/deleteContactThunk",
   async (contactId) => {
-    const response = await fetch(`contact/${contactId.id}`, {
+    const response = await fetch(`contact/${contactId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(contactId),
     }).then((response) => response.json());
     return {
       response,
@@ -87,7 +86,7 @@ export const contactSlice = createSlice({
       })
       .addCase(deleteContactThunk.fulfilled, (state, action) => {
         state.data = state.data.filter(
-          (contact) => contact.id !== action.payload.request.id
+          (contact) => contact.id !== action.payload.request
         );
       })
 
