@@ -10,6 +10,19 @@ export const fetchContacts = createAsyncThunk(
     return response.contacts;
   }
 );
+export const deleteContactThunk = createAsyncThunk(
+  "contacts/deleteContactThunk",
+  async (contactId) => {
+    const response = await fetch(`contact/${contactId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => response.json());
+    return {
+      response,
+      request: contactId,
+    };
+  }
+);
 
 export const updateContactThunk = createAsyncThunk(
   "contacts/updateContactThunk",
@@ -54,12 +67,6 @@ export const contactSlice = createSlice({
         }
       });
     },
-    deleteContact: (state, action) => {
-      state.data = state.data.filter(
-        (contact) => contact.id !== action.payload.id
-      );
-      contactSlice.caseReducers.setDefaultSelectedContact(state);
-    },
     editContact: (state, action) => {
       state.data.forEach((contact) => {
         if (contact.id === action.payload) {
@@ -75,6 +82,15 @@ export const contactSlice = createSlice({
         contactSlice.caseReducers.setDefaultSelectedContact(state);
       })
       .addCase(fetchContacts.rejected, (state, action) => {
+        console.log("extra reducers rejected", action);
+      })
+      .addCase(deleteContactThunk.fulfilled, (state, action) => {
+        state.data = state.data.filter(
+          (contact) => contact.id !== action.payload.request
+        );
+      })
+
+      .addCase(deleteContactThunk.rejected, (state, action) => {
         console.log("extra reducers rejected", action);
       })
       .addCase(updateContactThunk.fulfilled, (state, action) => {
@@ -94,7 +110,6 @@ export const contactSlice = createSlice({
   },
 });
 
-export const { addContact, selectContact, deleteContact, editContact } =
-  contactSlice.actions;
+export const { addContact, selectContact, editContact } = contactSlice.actions;
 
 export default contactSlice.reducer;
