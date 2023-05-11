@@ -14,10 +14,9 @@ export const fetchMessages = createAsyncThunk(
 export const deleteMessageThunk = createAsyncThunk(
   "messages/deleteMessages",
   async (messageId) => {
-    const response = await fetch(`message/${messageId.id}`, {
+    const response = await fetch(`message/${messageId}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(messageId),
     }).then((response) => response.json());
     return {
       response,
@@ -44,7 +43,7 @@ export const messageSlice = createSlice({
       })
       .addCase(deleteMessageThunk.fulfilled, (state, action) => {
         state.data = state.data.filter(
-          (message) => message.id !== action.payload.request.id
+          (message) => message.id !== action.payload.request
         );
       })
 

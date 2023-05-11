@@ -12,7 +12,7 @@ export default function Message({ message }) {
       <em>
         (sent to {message.receiverName}, id: {message.receiverId})
       </em>
-      <button onClick={() => dispatch(deleteMessageThunk({ id: message.id }))}>
+      <button onClick={() => dispatch(deleteMessageThunk(message.id))}>
         Delete
       </button>
     </li>
