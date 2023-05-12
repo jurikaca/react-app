@@ -4,6 +4,7 @@ import RightComponent from "./right/RightComponent";
 import LeftComponent from "./left/LeftComponent";
 import AddContact from "./AddContact";
 import User from "./auth/User";
+import ProfileSettings from "./ProfileSettings";
 import { useDispatch, useSelector } from "react-redux";
 import {
   logInThunk,
@@ -73,7 +74,7 @@ export default function InnerApp1() {
               <LeftComponent />
             </div>
             <div style={{ innerWidth: "50%" }}>
-              <RightComponent />
+              <RightComponent loggedInUser={loggedInUser} />
             </div>
           </div>
         )}
