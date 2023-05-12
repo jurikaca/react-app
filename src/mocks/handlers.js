@@ -53,6 +53,54 @@ export const handlers = [
   rest.post("/contact", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ success: true }));
   }),
+  rest.post("/login", (req, res, ctx) => {
+    if (req.body.username && req.body.password) {
+      sessionStorage.setItem("isAuthenticated", true);
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          user: { id: 1, username: "user", email: "user@example.com" },
+        })
+      );
+    } else {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          success: false,
+          error: "Invalid username or password",
+        })
+      );
+    }
+  }),
+  rest.get("/getlogin-User", (req, res, ctx) => {
+    const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+    if (!isAuthenticated) {
+      return res(
+        ctx.status(201),
+        ctx.json({
+          success: false,
+        })
+      );
+    }
+
+    const user = {
+      id: 1,
+      username: "inisi",
+      email: "inis@gmail.com",
+    };
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        user: user,
+      })
+    );
+  }),
+  rest.post("/logout", (req, res, ctx) => {
+    sessionStorage.removeItem("isAuthenticated");
+    return res(ctx.status(200), ctx.json({ success: true }));
+  }),
   // rest.get('/user', (req, res, ctx) => {
   // Persist user's authentication in the session
   //   sessionStorage.setItem('is-authenticated', 'true')

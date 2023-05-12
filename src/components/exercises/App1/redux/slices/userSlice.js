@@ -1,19 +1,83 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import "regenerator-runtime/runtime";
+
+export const logInThunk = createAsyncThunk(
+  "loggedInUser/logInThunk",
+  async (data) => {
+    const response = await fetch("login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }).then((response) => response.json());
+    return response;
+  }
+);
+export const logOutThunk = createAsyncThunk(
+  "loggedInUser/logOutThunk",
+  async () => {
+    const response = await fetch("logout", { method: "POST" }).then(
+      (response) => response.json()
+    );
+    return response;
+  }
+);
+export const logUserInThunk = createAsyncThunk(
+  "loggedInUser/logInUserThunk",
+  async () => {
+    const response = await fetch("getlogin-User").then((response) =>
+      response.json()
+    );
+    return response;
+  }
+);
 
 export const userSlice = createSlice({
-    name: 'user',
-    initialState: {},
-    reducers: {
-        log_in: (state, action) => {
-            state = action.payload.user;
-        },
-        log_out: (state, action) => {
-            return null;
-        },
-        get_user: (state, action) => {
-            state = action.payload.user;
-        }
-    }
+  name: "user",
+  initialState: {
+    status: "idle",
+    loggedInUser: null,
+    logInError: false,
+    username: "",
+    password: "",
+  },
+  reducers: {
+    get_user: (state, action) => {
+      state.loggedInUser = action.payload;
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(logInThunk.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.loggedInUser = action.payload.user;
+        state.username = action.payload.user.username;
+        state.password = action.payload.user.password;
+      } else {
+        state.logInError = true;
+        console.log("User log in Error.");
+      }
+    });
+    builder.addCase(logInThunk.rejected, (state, action) => {
+      console.log("extra reducers rejected", action);
+    });
+    builder.addCase(logOutThunk.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.loggedInUser = null;
+      }
+    });
+    builder.addCase(logOutThunk.rejected, (state, action) => {
+      console.log("extra reducers rejected", action);
+    });
+    builder.addCase(logUserInThunk.fulfilled, (state, action) => {
+      if (action.payload.success === true) {
+        state.loggedInUser = action.payload.user;
+      } else {
+        state.loggedInUser = null;
+      }
+    });
+    builder.addCase(logUserInThunk.rejected, (state, action) => {
+      console.log("extra reducers rejected", action);
+    });
+  },
 });
 
 export const { log_in, log_out, get_user } = userSlice.actions;
