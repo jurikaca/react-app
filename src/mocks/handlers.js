@@ -53,6 +53,10 @@ export const handlers = [
   rest.post("/contact", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({ success: true }));
   }),
+  rest.post("/profile/:profileId", (req, res, ctx) => {
+    const body = req.body;
+    return res(ctx.status(200), ctx.json({ success: true, payload: body }));
+  }),
   rest.post("/login", (req, res, ctx) => {
     if (req.body.username && req.body.password) {
       sessionStorage.setItem("isAuthenticated", true);

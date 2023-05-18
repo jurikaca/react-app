@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "./right/RightComponent.css";
+import { profileThunk } from "./redux/slices/userSlice";
 
 const ProfileSettings = () => {
+  const dispatch = useDispatch();
+  const messageSubmit = useSelector((selector) => selector.user.submitedData);
+  const [clicked, setClicked] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [username, setUsername] = useState("");
@@ -10,22 +15,14 @@ const ProfileSettings = () => {
     e.preventDefault();
 
     const data = {
+      profileId: Date.now(),
       firstName,
       lastName,
       username,
     };
 
-    const response = await fetch("profile/:profileId", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-
-    const result = await response.json();
-
-    console.log(result.message);
+    dispatch(profileThunk(data));
+    setClicked(true);
   };
 
   return (
@@ -64,6 +61,7 @@ const ProfileSettings = () => {
           <input type="text" id="email" value="example@example.com" disabled />
         </div>
         <button type="submit">Save</button>
+        {clicked ? JSON.stringify(messageSubmit) : ""}
       </form>
     </section>
   );
