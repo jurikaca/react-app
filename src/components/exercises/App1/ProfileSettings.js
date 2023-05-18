@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./right/RightComponent.css";
 import { profileThunk } from "./redux/slices/userSlice";
 
 const ProfileSettings = () => {
