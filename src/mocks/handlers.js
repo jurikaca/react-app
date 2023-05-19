@@ -24,6 +24,72 @@ export const handlers = [
             email: "bob@mail.com",
             selected: false,
           },
+          {
+            id: 4,
+            name: "aleks",
+            email: "aleks@mail.com",
+            selected: false,
+          },
+          {
+            id: 5,
+            name: "john",
+            email: "john@mail.com",
+            selected: false,
+          },
+          {
+            id: 6,
+            name: "Tim",
+            email: "tim@mail.com",
+            selected: false,
+          },
+          {
+            id: 7,
+            name: "Ela",
+            email: "Ela@mail.com",
+            selected: false,
+          },
+          {
+            id: 8,
+            name: "Trent",
+            email: "trent@mail.com",
+            selected: false,
+          },
+          {
+            id: 9,
+            name: "James",
+            email: "James@mail.com",
+            selected: false,
+          },
+          {
+            id: 10,
+            name: "Anna",
+            email: "anna@mail.com",
+            selected: false,
+          },
+          {
+            id: 11,
+            name: "Elsa",
+            email: "elsa@mail.com",
+            selected: false,
+          },
+          {
+            id: 12,
+            name: "Tina",
+            email: "tina@mail.com",
+            selected: false,
+          },
+          {
+            id: 13,
+            name: "Aurora",
+            email: "aurora@mail.com",
+            selected: false,
+          },
+          {
+            id: 14,
+            name: "Angel",
+            email: "Angel@mail.com",
+            selected: false,
+          },
         ],
       })
     );
