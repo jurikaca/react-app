@@ -67,7 +67,7 @@ export default function InnerApp1() {
           )}
         </b>
 
-        {contactsData && (
+        {contactsData && loggedInUser && (
           <div style={{ display: "flex" }}>
             <div style={{ innerWidth: "50%" }}>
               <LeftComponent />
@@ -77,11 +77,13 @@ export default function InnerApp1() {
             </div>
           </div>
         )}
-        <div>
-          <hr />
-          <label>Add new contact section</label>
-          <AddContact />
-        </div>
+        {loggedInUser && (
+          <div>
+            <hr />
+            <label>Add new contact section</label>
+            <AddContact />
+          </div>
+        )}
         <>
           <User
             loggedInUser={loggedInUser}
