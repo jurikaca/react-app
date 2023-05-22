@@ -101,6 +101,9 @@ export const handlers = [
     sessionStorage.removeItem("isAuthenticated");
     return res(ctx.status(200), ctx.json({ success: true }));
   }),
+  rest.delete("contact/:contactId", (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({ success: true }));
+  }),
   // rest.get('/user', (req, res, ctx) => {
   // Persist user's authentication in the session
   //   sessionStorage.setItem('is-authenticated', 'true')
