@@ -55,7 +55,10 @@ export const handlers = [
   }),
   rest.post("/profile/:profileId", (req, res, ctx) => {
     const body = req.body;
-    return res(ctx.status(200), ctx.json({ success: true, payload: body }));
+    if (body) {
+      return res(ctx.status(200), ctx.json({ success: true, payload: body }));
+    }
+    return res(ctx.status(400), ctx.json({ success: false }));
   }),
   rest.post("/login", (req, res, ctx) => {
     if (req.body.username && req.body.password) {

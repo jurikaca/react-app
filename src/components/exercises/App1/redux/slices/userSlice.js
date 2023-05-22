@@ -12,7 +12,7 @@ export const logInThunk = createAsyncThunk(
     return response;
   }
 );
-export const profileThunk = createAsyncThunk(
+export const profileDataThunk = createAsyncThunk(
   "loggedInUser/profileThunk",
   async (data) => {
     const response = await fetch(`profile/${data.profileId}`, {
@@ -86,10 +86,10 @@ export const userSlice = createSlice({
     builder.addCase(logOutThunk.rejected, (state, action) => {
       console.log("extra reducers rejected", action);
     });
-    builder.addCase(profileThunk.fulfilled, (state, action) => {
+    builder.addCase(profileDataThunk.fulfilled, (state, action) => {
       state.submitedData = action.payload.request;
     });
-    builder.addCase(profileThunk.rejected, (state, action) => {
+    builder.addCase(profileDataThunk.rejected, (state, action) => {
       console.log("extra reducers rejected", action);
     });
     builder.addCase(logUserInThunk.fulfilled, (state, action) => {

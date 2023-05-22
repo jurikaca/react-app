@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { profileThunk } from "./redux/slices/userSlice";
+import { profileDataThunk } from "./redux/slices/userSlice";
 
 const ProfileSettings = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const ProfileSettings = () => {
       username,
     };
 
-    dispatch(profileThunk(data));
+    dispatch(profileDataThunk(data));
     setClicked(true);
   };
 
